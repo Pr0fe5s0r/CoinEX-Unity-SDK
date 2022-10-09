@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script>
+        async function SignMessage() {
+            const queryString = window.location.search;
+            console.log(queryString);
+            const urlParams = new URLSearchParams(queryString);
+            // MetaMask requires requesting permission to connect users accounts
+            let message = urlParams.get("msg");
+            let provider = new ethers.providers.Web3Provider(window.ethereum)
+            await provider.send("eth_requestAccounts", []);
+            signer = await provider.getSigner();
+            const signedMessage = await signer.signMessage(message);
+            let btn = document.createElement("button");
+            btn.innerHTML = "Copy signed message";
+            btn.onclick = function(){
+                navigator.clipboard.writeText(signedMessage);
+            }
+            document.body.appendChild(btn);
+        }
+    </script>
+    
+    
+<body>
+
+<h1>Click the connect Button.</h1>
+<button onclick="SignMessage()">Sign Message</button>
+ <h1 id="metamask"></h1>
+ <h1 id="metamask1"></h1>
+</body>
+</html>
