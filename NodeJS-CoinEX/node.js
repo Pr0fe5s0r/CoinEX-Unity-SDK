@@ -579,7 +579,7 @@ app.get("/signMessage",(req,res,next)=>{
 //----------------------------------------------------ERC20 function-----------------------------------------------------
 
 app.get("/sendERC20",(req,res,next)=>{
-    res.sendFile(__dirname + "/htmls/senderc20.html");
+    res.sendFile(__dirname + "/htmls/erc20/senderc20.html");
 })
 
 app.get("/getERC20Balance", async (req,res,next)=>{
@@ -608,6 +608,10 @@ app.get("/getERC20Symbol", async (req,res,next)=>{
 })
 
 //----------------------------------------------------ERC721 function-----------------------------------------------------
+
+app.get("/sendERC721",(req,res,next)=>{
+    res.sendFile(__dirname + "/htmls/erc721/senderc721.html");
+})
 
 app.get("/getERC721Name", async (req,res,next)=>{
     let name = await ERC721Func(req.body.tokenid,req.body.account, req.body.contract, "name");
