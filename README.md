@@ -68,7 +68,7 @@ To use this you need to instal unity and import the SDK inside you game project.
 <br>
 
 
-**ERC20 Fuunction's:**
+**ERC20 Function's:**
 
 - **await CoinEX.ERC20.GetERC20BalanceOf(string account, string contractaddress)**
         - By using this function we can get balance of a person who owns that ERC20.
@@ -85,7 +85,7 @@ To use this you need to instal unity and import the SDK inside you game project.
 - **await CoinEX.ERC20.SendERC20To(string account, string contractaddress)**
         - By using this function we can do ERC20 transaction by Metamask.
 
-**ERC721 Fuunction's:**
+**ERC721 Function's:**
 
 - **await CoinEX.ERC721.GetERC721BalanceOf(string account, string contractaddress)**
         - By using this function we can get balance of a person who owns that ERC721.
@@ -131,6 +131,14 @@ To use this you need to instal unity and import the SDK inside you game project.
 
 - **await CoinEX.ERC721.SendERC721To(string to, string contractaddress, string tokenid)**
         - By using this function we send erc721 token's from one person to another person.
+
+**NFT Function's:**
+
+- **await CoinEX.NFT.GetNFTTextureToPanel(string url, Renderer panel)**
+        - By using this function we can get NFT image from ipfs hash or any url and render the material to 3d object.
+
+- **await CoinEX.NFT.GetNFTJson(string ipfshash)**
+        - By using this function we can get JSON data from the IPFS hash.
 
 **Example Progrma Using Axios:**
 
