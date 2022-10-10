@@ -157,6 +157,12 @@ To use this you need to instal unity and import the SDK inside you game project.
 - **await CoinEX.Wallet.SendCET(string to, string amount)**
         - By using this function we can send CET token's to respective address.
 
+- **CoinEX.Wallet.FromWei(string amount)**
+        - By using this function we convert WEI to number.
+
+- **CoinEX.Wallet.ToWei(string amount)**
+        - By using this function we convert number to WEI.
+
 
 # What is Next:
 
