@@ -160,7 +160,7 @@ To use this you need to instal unity and import the SDK inside you game project.
 
 # What is Next:
 
-**1) Not Yet Been used by public usage. If we got any funding or respective company accept's this project it will be able to seen in public**
+**1) Not Yet ready for public usage. If we got any funding or respective company accept's this project it will be able to seen in public**
 
 **2) Need to add more contract standards like ERC1155 and many more. Also Custom Contract inteaction will be added**
 
