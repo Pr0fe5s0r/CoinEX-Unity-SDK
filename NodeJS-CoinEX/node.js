@@ -1,6 +1,6 @@
 const express = require("express")
 const app = express()
-const ethers = require('ethers');
+const { ethers, BigNumber } = require("ethers");
 const axios = require("axios");
 
 app.use(express.json())
@@ -647,7 +647,7 @@ app.get("/sendCET",(req,res,next)=>{
 
 app.get("/getERC20Balance", async (req,res,next)=>{
     let balance = await ERC20Func(req.body.account, req.body.contract, "balanceOf");
-    res.send(parseInt(balance._hex).toString());
+    res.send({values: BigNumber.from(balance._hex).toString()});
     next();
 })
 
