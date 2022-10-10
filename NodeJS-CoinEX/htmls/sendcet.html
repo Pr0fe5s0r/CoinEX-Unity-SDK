@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script>
+        async function openMetamask(contract, to, amoutn, signer){
+            var accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            var currentUser = accounts[0]
+            let txparams = {
+                to: to,
+                from: currentUser,
+                value: Number(parseInt(amoutn)).toString(16),
+            }
+
+            let hash = await ethereum.request({method: 'eth_sendTransaction', params:[txparams]}).then(txhash =>{
+                let btn = document.createElement("button");
+                btn.innerHTML = "Copy hash";
+                btn.onclick = function(){
+                    navigator.clipboard.writeText(txhash);
+                }
+                document.body.appendChild(btn);
+            })
+        }
+        async function SendERC20(signer)
+        {
+            const queryString = window.location.search;
+            console.log(queryString);
+            const urlParams = new URLSearchParams(queryString);
+            console.log(urlParams.get("to"), urlParams.get("amount"), urlParams.get("contract"));
+            let isvalidaddress = true;
+            if(!isvalidaddress == false)
+            {
+                let hash = await openMetamask(urlParams.get("contract"), urlParams.get("to"), urlParams.get("amount"), signer);
+            }
+        }
+
+        async function connectMetamask() {
+            // MetaMask requires requesting permission to connect users accounts
+            let provider = new ethers.providers.Web3Provider(window.ethereum)
+            await provider.send("eth_requestAccounts", []);
+            signer = await provider.getSigner();
+            console.log("Account address s:", await signer.getAddress());
+            SendERC20(signer);
+        }
+    </script>
+    
+    
+<body>
+
+<h1>Click the connect Button.</h1>
+<button onclick="connectMetamask()">Connect and transfer</button>
+ <h1 id="metamask"></h1>
+ <h1 id="metamask1"></h1>
+</body>
+</html>

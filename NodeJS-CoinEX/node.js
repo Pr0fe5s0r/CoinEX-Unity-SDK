@@ -1,6 +1,7 @@
 const express = require("express")
 const app = express()
 const ethers = require('ethers');
+const axios = require("axios");
 
 app.use(express.json())
 
@@ -34,7 +35,7 @@ async function ERC20Func(account, tocontract, func)
     }
 }
 
-async function ERC721Func(tokenid, account, tocontract, func)
+async function ERC721Func(tokenid,conAbi, account, tocontract, func)
 {
     var contractABI = [
         {
@@ -512,56 +513,114 @@ async function ERC721Func(tokenid, account, tocontract, func)
             "type": "function"
         }
     ]
-    const provider = new ethers.providers.JsonRpcProvider("https://testnet-rpc.coinex.net/");
-    const contract = new ethers.Contract(tocontract, contractABI, provider);
-    if(func == "balanceOf")
-    {
-        const balance = await contract.balanceOf(account);
-        return (balance);
-    }else if(func == "decimals")
-    {
-        const decimals = await contract.decimals();
-        return (decimals);
-    }else if(func == "name")
-    {
-        const name = await contract.name();
-        return (name);
-    }else if(func == "totalSupply")
-    {
-        const totsup = await contract.totalSupply();
-        return totsup;
-    }else if(func == "symbol")
-    {
-        const symbol = await contract.symbol();
-        return symbol;
-    }else if(func == "ownerof")
-    {
-        const ownerof = await contract.ownerOf(tokenid);
-        return ownerof;
-    }else if(func == "uri")
-    {
-        const uri = await contract.tokenURI(tokenid);
-        return uri;
-    }else if(func == "alltokenbal")
-    {
-        const totsup = await contract.totalSupply();
 
-        let tot = parseInt(totsup._hex);
-        let all = [];
-        let j =0;
-        for(let i=0; i<tot; i++)
+    console.log(conAbi);
+    var finalData = conAbi.replace(/\\/g, "");
+    console.log(JSON.parse(finalData));
+    const provider = new ethers.providers.JsonRpcProvider("https://testnet-rpc.coinex.net/");
+    if(conAbi != "")
+    {
+        const contract = new ethers.Contract(tocontract, JSON.parse(finalData), provider);
+        if(func == "balanceOf")
         {
-            const ownerof = await contract.ownerOf(i);
-            if(ownerof == account)
+            const balance = await contract.balanceOf(account);
+            return (balance);
+        }else if(func == "decimals")
+        {
+            const decimals = await contract.decimals();
+            return (decimals);
+        }else if(func == "name")
+        {
+            const name = await contract.name();
+            return (name);
+        }else if(func == "totalSupply")
+        {
+            const totsup = await contract.totalSupply();
+            return totsup;
+        }else if(func == "symbol")
+        {
+            const symbol = await contract.symbol();
+            return symbol;
+        }else if(func == "ownerof")
+        {
+            const ownerof = await contract.ownerOf(tokenid);
+            return ownerof;
+        }else if(func == "uri")
+        {
+            const uri = await contract.tokenURI(tokenid);
+            return uri;
+        }else if(func == "alltokenbal")
+        {
+            const totsup = await contract.totalSupply();
+
+            let tot = parseInt(totsup._hex);
+            let all = [];
+            let j =0;
+            for(let i=0; i<tot; i++)
             {
-                all[j] = i;
-                j++;
+                const ownerof = await contract.ownerOf(i);
+                if(ownerof == account)
+                {
+                    all[j] = i;
+                    j++;
+                }
             }
+            return all;
         }
-        return all;
-    }
-    else{
-        return "";
+        else{
+            return "";
+        }
+    }else{
+        const contract = new ethers.Contract(tocontract, contractABI, provider);
+        if(func == "balanceOf")
+        {
+            const balance = await contract.balanceOf(account);
+            return (balance);
+        }else if(func == "decimals")
+        {
+            const decimals = await contract.decimals();
+            return (decimals);
+        }else if(func == "name")
+        {
+            const name = await contract.name();
+            return (name);
+        }else if(func == "totalSupply")
+        {
+            const totsup = await contract.totalSupply();
+            return totsup;
+        }else if(func == "symbol")
+        {
+            const symbol = await contract.symbol();
+            return symbol;
+        }else if(func == "ownerof")
+        {
+            const ownerof = await contract.ownerOf(tokenid);
+            return ownerof;
+        }else if(func == "uri")
+        {
+            const uri = await contract.tokenURI(tokenid);
+            return uri;
+        }else if(func == "alltokenbal")
+        {
+            const totsup = await contract.totalSupply();
+
+            let tot = parseInt(totsup._hex);
+            let all = [];
+            let j =0;
+            for(let i=0; i<tot; i++)
+            {
+                const ownerof = await contract.ownerOf(i);
+                if(ownerof == account)
+                {
+                    all[j] = i;
+                    j++;
+                }
+            }
+            return all;
+        }
+        else{
+            return "";
+        }
     }
 }
 
@@ -580,6 +639,10 @@ app.get("/signMessage",(req,res,next)=>{
 
 app.get("/sendERC20",(req,res,next)=>{
     res.sendFile(__dirname + "/htmls/erc20/senderc20.html");
+})
+
+app.get("/sendCET",(req,res,next)=>{
+    res.sendFile(__dirname + "/htmls/sendcet.html");
 })
 
 app.get("/getERC20Balance", async (req,res,next)=>{
@@ -614,45 +677,51 @@ app.get("/sendERC721",(req,res,next)=>{
 })
 
 app.get("/getERC721Name", async (req,res,next)=>{
-    let name = await ERC721Func(req.body.tokenid,req.body.account, req.body.contract, "name");
+    let name = await ERC721Func(req.body.tokenid,req.body.abi, req.body.account, req.body.contract, "name");
     res.send(name.toString());
     next();
 })
 
 app.get("/getERC721Symbol", async (req,res,next)=>{
-    let name = await ERC721Func(req.body.tokenid,req.body.account, req.body.contract, "symbol");
+    let name = await ERC721Func(req.body.tokenid,req.body.abi,req.body.account, req.body.contract, "symbol");
     res.send(name.toString());
     next();
 })
 
 app.get("/getERC721OwnerOf", async (req,res,next)=>{
-    let name = await ERC721Func(req.body.tokenid,req.body.account, req.body.contract, "ownerof");
+    let name = await ERC721Func(req.body.tokenid,req.body.abi,req.body.account, req.body.contract, "ownerof");
     res.send(name.toString());
     next();
 })
 
 app.get("/getERC721TotalSupply", async (req,res,next)=>{
-    let name = await ERC721Func(req.body.tokenid,req.body.account, req.body.contract, "totalSupply");
+    let name = await ERC721Func(req.body.tokenid,req.body.abi,req.body.account, req.body.contract, "totalSupply");
     res.send(name.toString());
     next();
 })
 
 app.get("/getERC721URI", async (req,res,next)=>{
-    let name = await ERC721Func(req.body.tokenid,req.body.account, req.body.contract, "uri");
+    let name = await ERC721Func(req.body.tokenid,req.body.abi,req.body.account, req.body.contract, "uri");
     res.send(name.toString());
     next();
 })
 
 app.get("/getERC721BalanceOf", async (req,res,next)=>{
-    let name = await ERC721Func(req.body.tokenid, req.body.account, req.body.contract, "balanceOf");
+    let name = await ERC721Func(req.body.tokenid,req.body.abi, req.body.account, req.body.contract, "balanceOf");
     res.send(name.toString());
     next();
 })
 
 app.get("/getERC721MyTokenID", async (req,res,next)=>{
-    let name = await ERC721Func(req.body.tokenid, req.body.account, req.body.contract, "alltokenbal");
+    let name = await ERC721Func(req.body.tokenid,req.body.abi, req.body.account, req.body.contract, "alltokenbal");
     console.log(name);
     res.send(name);
+    next();
+})
+
+app.get("/getIPFSJSON", async (req,res,next)=>{
+    let values = await axios.get("https://ipfs.io/ipfs/"+req.body.hash);
+    res.send(JSON.stringify(values.data));
     next();
 })
 
