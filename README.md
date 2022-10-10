@@ -140,102 +140,28 @@ To use this you need to instal unity and import the SDK inside you game project.
 - **await CoinEX.NFT.GetNFTJson(string ipfshash)**
         - By using this function we can get JSON data from the IPFS hash.
 
-**Example Progrma Using Axios:**
+**Wallet Function's:**
 
-``` javascript 
-async function UploadJsonData(){
-    axios({
-        method: 'post', //you can set what request you want to be
-        url: 'https://<your address>/upload/uploadJson',
-        data: {
-            name:"CLOUDIPFS",
-            data:{
-                name:"First NFT to IPFS",
-                Description:"This is a first ipfs cloud test"
-            },
-            pin: true
-        },
-          headers: {
-              publickey: 'DEFAULT',
-              privatekey: 'DEFAULT123'
-          }
-        }).then(suc=>{
-            console.log(suc);
-        })
-    }
-```
-<br>
-<br>
+- **await CoinEX.Wallet.GetAccountBalanceFromWei(string account)**
+        - By using this function we can get CET Balance from wei.
 
-**Upload File:**
+- **await CoinEX.Wallet.GetAccountBalanceInWei(string account)**
+        - By using this function we can get CET Balance in wei.
 
-API Call: **``` /upload/uploadFile ```**
+- **await CoinEX.Wallet.ConnectWallet()**
+        - By using this function it return connected wallet.
 
-Header: ``` publickey: <'your publick key'>, privatekey:<'your privatekey'>```
+- **await CoinEX.Wallet.SignMessage(string message)**
+        - By using this function it will return signed message.
 
-API response: ```{
-    "ipfshash":<'file hash'>,
-    "url":"<'url of IPFS'>",
-    "pin":true or false
-}```
+- **await CoinEX.Wallet.SendCET(string to, string amount)**
+        - By using this function we can send CET token's to respective address.
 
-**Example Progrma Using Axios:**
 
-``` javascript 
-async function UploadFile(){
-    const image = fs.createReadStream("yourfile.png")
-    async function UploadData(){
-        let datas = new FormData();
-        datas.append('file', image);
-        console.log(datas);
-        let re = axios.post("https://<your address>/upload/uploadFile", datas,
-        {
-            headers: {
-                publickey: 'DEFAULT',
-                privatekey: 'DEFAULT123'
-            },data:{
-              pin: true
-            }
-        },).then(suc=>{
-            console.log(suc)
-        })
-    }
-```
+# What is Next:
 
-<br>
-<br>
-<br>
+**1) Not Yet Been used by public usage. If we got any funding or respective company accept's this project it will be able to seen in public**
 
-**Get JSON Data:**
+**2) Need to add more contract standards like ERC1155 and many more. Also Custom Contract inteaction will be added**
 
-API Call: **``` /get/getJson ```**
-
-Header: ``` publickey: <'your publick key'>, privatekey:<'your privatekey'>```
-
-Body: ``` {
-  hash: "your ipfs hash"
-}```
-
-API response: ```{
-    "data":<'ipfs json data'>
-}```
-
-**Example Progrma Using Axios:**
-
-``` javascript 
-async function GetJsonData(){
-    axios({
-        method: 'get', //you can set what request you want to be
-        url: 'https://<Your Address>/get/getJson',
-        data: {
-            hash:"Your IPFS hash"
-        },
-        headers: {
-            publickey: 'DEFAULT',
-            privatekey: 'DEFAULT123'
-        }
-    }).then(suc=>{
-        console.log(suc);
-    })
-}
-```
+**3) Debuging of the SDK will be held. And a new version of Bug free SDK will be provided**
