@@ -85,6 +85,9 @@ To use this you need to instal unity and import the SDK inside you game project.
 - **await CoinEX.ERC20.SendERC20To(string account, string contractaddress)**
         - By using this function we can do ERC20 transaction by Metamask.
 
+- **await CoinEX.ERC20.CreateERC20(string name, string amount, string symbol, string decimals)**
+        - By using this function create our own ERC20 inside the game.
+
 **ERC721 Function's:**
 
 - **await CoinEX.ERC721.GetERC721BalanceOf(string account, string contractaddress)**
