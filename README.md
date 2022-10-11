@@ -11,9 +11,12 @@
 <p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-install">How To Install</a> •
-  <a href="#how-to-use">How To Use</a> •
-  <a href="#download">Download</a> •
-  <a href="#related">Related</a> •
+  <a href="#how-to-use-the-functions">How To Use the Functions</a> •
+        <a href="#erc20-functions">ERC20 Functions</a> •
+        <a href="#erc721-functions">ERC721 Functions</a> •
+        <a href="#wallet-functions">Wallet Functions</a> •
+        <a href="#nft-functions">NFT Functions</a> •
+  <a href="#What-is-Next:"># What is Next:</a> •
 </p>
 
 <!-- ![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif) -->
@@ -59,7 +62,7 @@ $ node node.js
 
 
 
-## How To Use and Functions
+## How To Use the Functions
 
 To use this you need to instal unity and import the SDK inside you game project. Make sure you have a backup of your project.
 
@@ -68,7 +71,7 @@ To use this you need to instal unity and import the SDK inside you game project.
 <br>
 
 
-**ERC20 Function's:**
+## ERC20 Functions
 
 - **await CoinEX.ERC20.GetERC20BalanceOf(string account, string contractaddress)**
         - By using this function we can get balance of a person who owns that ERC20.
@@ -88,7 +91,7 @@ To use this you need to instal unity and import the SDK inside you game project.
 - **await CoinEX.ERC20.CreateERC20(string name, string amount, string symbol, string decimals)**
         - By using this function create our own ERC20 inside the game.
 
-**ERC721 Function's:**
+## ERC721 Functions
 
 - **await CoinEX.ERC721.GetERC721BalanceOf(string account, string contractaddress)**
         - By using this function we can get balance of a person who owns that ERC721.
@@ -135,7 +138,7 @@ To use this you need to instal unity and import the SDK inside you game project.
 - **await CoinEX.ERC721.SendERC721To(string to, string contractaddress, string tokenid)**
         - By using this function we send erc721 token's from one person to another person.
 
-**NFT Function's:**
+## NFT Functions
 
 - **await CoinEX.NFT.GetNFTTextureToPanel(string url, Renderer panel)**
         - By using this function we can get NFT image from ipfs hash or any url and render the material to 3d object.
@@ -143,7 +146,7 @@ To use this you need to instal unity and import the SDK inside you game project.
 - **await CoinEX.NFT.GetNFTJson(string ipfshash)**
         - By using this function we can get JSON data from the IPFS hash.
 
-**Wallet Function's:**
+## Wallet Functions
 
 - **await CoinEX.Wallet.GetAccountBalanceFromWei(string account)**
         - By using this function we can get CET Balance from wei.
