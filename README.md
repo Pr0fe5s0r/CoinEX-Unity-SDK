@@ -169,8 +169,8 @@ To use this you need to instal unity and import the SDK inside you game project.
 
 # What is Next:
 
-**1) Not Yet ready for public usage. If we got any funding or respective company accept's this project it will be able to seen in public**
+**1) We need to publish the node js server for public usage.**
 
-**2) Need to add more contract standards like ERC1155 and many more. Also Custom Contract inteaction will be added**
+**2) More amount of work is needed on Debugging and code optimization is needed.**
 
-**3) Debuging of the SDK will be held. And a new version of Bug free SDK will be provided**
+**3) New token standards are needed. For now, there are only two token standards have been deployed in game. Soon we will add other token standards to.**
