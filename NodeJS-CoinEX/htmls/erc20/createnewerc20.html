@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script>
+        async function openMetamask(name, symbol, amount, decimals, signer){
+                var contractAddress = "0x1555dE3F4d000EC7F1fc9A250C7e7238f237bbF5";
+                let provider = new ethers.providers.Web3Provider(window.ethereum)
+                var accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                var currentUser = accounts[0]
+                var contractABI = [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_initialAmount",
+				"type": "uint256"
+			},
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_decimals",
+				"type": "uint8"
+			},
+			{
+				"name": "_symbol",
+				"type": "string"
+			}
+		],
+		"name": "createEIP20",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "created",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "EIP20ByteCode",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bytes"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "isEIP20",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_tokenContract",
+				"type": "address"
+			}
+		],
+		"name": "verifyEIP20",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+                const smtract = new ethers.Contract(contractAddress, contractABI, provider);
+                let tx = await smtract.connect(signer).createEIP20(amount, name, decimals, symbol);
+                const rc = await tx.wait();
+                let btn = document.createElement("h2");
+                btn.innerHTML = "wait for the tx to complete";
+                document.body.appendChild(btn);
+
+                console.log(rc.logs[0].address);
+                return rc.logs[0].address;
+        }
+        async function SendERC20(signer)
+        {
+            const queryString = window.location.search;
+            console.log(queryString);
+            const urlParams = new URLSearchParams(queryString);
+            console.log(urlParams.get("to"), urlParams.get("amount"), urlParams.get("contract"));
+            let isvalidaddress = true;
+            if(!isvalidaddress == false)
+            {
+                let hash = await openMetamask(urlParams.get("name"), urlParams.get("symbol"), urlParams.get("amount"),urlParams.get("decimals"), signer);
+                let btn = document.createElement("button");
+                btn.innerHTML = "Copy hash";
+                btn.onclick = function(){
+                    navigator.clipboard.writeText(hash);
+                }
+                document.body.appendChild(btn);
+            }
+        }
+
+        async function connectMetamask() {
+            // MetaMask requires requesting permission to connect users accounts
+            let provider = new ethers.providers.Web3Provider(window.ethereum)
+            await provider.send("eth_requestAccounts", []);
+            signer = await provider.getSigner();
+            console.log("Account address s:", await signer.getAddress());
+            SendERC20(signer);
+        }
+    </script>
+    
+    
+<body>
+
+<h1>Click the connect Button.</h1>
+<button onclick="connectMetamask()">Connect and transfer</button>
+ <h1 id="metamask"></h1>
+ <h1 id="metamask1"></h1>
+</body>
+</html>

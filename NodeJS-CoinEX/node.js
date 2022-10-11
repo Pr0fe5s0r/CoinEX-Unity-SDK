@@ -645,6 +645,10 @@ app.get("/sendCET",(req,res,next)=>{
     res.sendFile(__dirname + "/htmls/sendcet.html");
 })
 
+app.get("/createERC20",(req,res,next)=>{
+    res.sendFile(__dirname + "/htmls/createnewerc20.html");
+})
+
 app.get("/getERC20Balance", async (req,res,next)=>{
     let balance = await ERC20Func(req.body.account, req.body.contract, "balanceOf");
     res.send({values: BigNumber.from(balance._hex).toString()});
