@@ -18,6 +18,10 @@ contract MyToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ownabl
 
     constructor() ERC721("MyToken", "MTK") EIP712("MyToken", "1") {}
 
+    function _baseURI() internal pure override returns (string memory) {
+        return "https://ipfs.io/ipfs/";
+    }
+
     function pause() public onlyOwner {
         _pause();
     }
