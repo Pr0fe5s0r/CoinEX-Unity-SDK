@@ -16,7 +16,7 @@
         <a href="#erc721-functions">ERC721 Functions</a> •
         <a href="#wallet-functions">Wallet Functions</a> •
         <a href="#nft-functions">NFT Functions</a> •
-  <a href="#What-is-Next:"># What is Next:</a> •
+        <a href="#What-is-Next:"># What is Next:</a> •
 </p>
 
 <!-- ![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif) -->
