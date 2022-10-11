@@ -61,10 +61,8 @@ $ node node.js
 
 ## How To Use and Functions
 
-To use this you need to instal unity and import the SDK inside you game project. Make sure you have a backup of your project.
+To use this you need to install unity and import the SDK inside you game project. Make sure you have a backup of your project.
 
-<br>
-<br>
 <br>
 
 
